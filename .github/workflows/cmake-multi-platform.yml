@@ -1,0 +1,21 @@
+name: Build Kepler NVENC Plugin
+on: [workflow_dispatch]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure CMake
+        run: cmake --preset windows-x64
+
+      - name: Build Plugin
+        run: cmake --build --preset windows-x64 --config Release
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nvenc-kepler-windows
+          path: build_x86_64/Release/nvenckepler.dll
